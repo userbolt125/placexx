@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Globe, Search, MapPin, Activity, Calendar } from 'lucide-react';
+import { Globe, Search, ChevronDown } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import PlacesSidebar from './components/PlacesSidebar';
 import HomePage from './pages/HomePage';
@@ -25,6 +25,29 @@ function App() {
     { value: 'culture', label: 'Culture' },
     { value: 'business', label: 'Business' }
   ];
+
+  const navItems = {
+    products: {
+      title: 'Products',
+      items: ['Featured Products', 'New Arrivals', 'Best Sellers', 'Categories', 'Brands']
+    },
+    services: {
+      title: 'Services',
+      items: ['Consulting', 'Training', 'Support', 'Custom Solutions', 'Maintenance']
+    },
+    promotions: {
+      title: 'Promotional Offers',
+      items: ['Current Deals', 'Seasonal Offers', 'Clearance', 'Bundle Deals', 'Special Discounts']
+    },
+    eshops: {
+      title: 'E-Shops',
+      items: ['Featured Shops', 'New Shops', 'Popular Shops', 'Shop Categories', 'Shop Directory']
+    },
+    cooperatives: {
+      title: 'Cooperatives',
+      items: ['Local Cooperatives', 'Artisan Groups', 'Fair Trade', 'Community Projects', 'Support Programs']
+    }
+  };
 
   return (
     <Router>
@@ -62,70 +85,60 @@ function App() {
           </div>
         </div>
 
-        {/* Navigation Bar - Now sticky */}
-        <div className="sticky top-0 z-10 bg-white border-b border-slate-200 shadow-sm">
-          <div className="container mx-auto px-4 flex justify-center space-x-4 py-3">
-            <button 
-              className={`flex items-center px-6 py-2 rounded-md transition-colors ${
-                mode === 'place' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-              onClick={() => setMode('place')}
-            >
-              <MapPin size={20} className="mr-2" />
-              <span>Explore Places</span>
-            </button>
-            <button 
-              className={`flex items-center px-6 py-2 rounded-md transition-colors ${
-                mode === 'activity' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-              onClick={() => setMode('activity')}
-            >
-              <Activity size={20} className="mr-2" />
-              <span>Find Activities</span>
-            </button>
-            <button 
-              className={`flex items-center px-6 py-2 rounded-md transition-colors ${
-                mode === 'event' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-              }`}
-              onClick={() => setMode('event')}
-            >
-              <Calendar size={20} className="mr-2" />
-              <span>Browse Events</span>
-            </button>
-          </div>
-          
-          {/* Search Area */}
-          <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-40 px-3 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-700"
-            >
-              {categories.map((category) => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
+        {/* Navigation Bar */}
+        <div className="bg-white border-b border-slate-200 shadow-sm">
+          <div className="container mx-auto">
+            <nav className="flex justify-center">
+              {Object.entries(navItems).map(([key, { title, items }]) => (
+                <div key={key} className="relative group">
+                  <button className="px-6 py-4 text-slate-700 hover:text-blue-600 flex items-center gap-1">
+                    {title}
+                    <ChevronDown size={16} />
+                  </button>
+                  <div className="absolute left-0 top-full bg-white border border-slate-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[200px] z-50">
+                    <div className="py-2">
+                      {items.map((item, index) => (
+                        <a
+                          key={index}
+                          href="#"
+                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600"
+                        >
+                          {item}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               ))}
-            </select>
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
-              <input
-                type="text"
-                placeholder={`Search in ${selectedCategory === 'all' ? 'all categories' : selectedCategory}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            </nav>
           </div>
         </div>
-        
+
+        {/* Search Area */}
+        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-40 px-3 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-700"
+          >
+            {categories.map((category) => (
+              <option key={category.value} value={category.value}>
+                {category.label}
+              </option>
+            ))}
+          </select>
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+            <input
+              type="text"
+              placeholder={`Search in ${selectedCategory === 'all' ? 'all categories' : selectedCategory}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
         <Sidebar 
           isOpen={isSidebarOpen} 
           onClose={() => setIsSidebarOpen(false)} 
