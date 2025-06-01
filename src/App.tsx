@@ -130,27 +130,29 @@ function App() {
         </div>
 
         {/* Search Area */}
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-40 px-3 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-700"
-          >
-            {categories.map((category) => (
-              <option key={category.value} value={category.value}>
-                {category.label}
-              </option>
-            ))}
-          </select>
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
-            <input
-              type="text"
-              placeholder={`Search in ${selectedCategory === 'all' ? 'all categories' : selectedCategory}...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+        <div className="container mx-auto px-4 flex justify-center">
+          <div className="max-w-2xl w-full flex items-center gap-2 py-3">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-32 px-2 py-1.5 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-700 text-sm"
+            >
+              {categories.map((category) => (
+                <option key={category.value} value={category.value}>
+                  {category.label}
+                </option>
+              ))}
+            </select>
+            <div className="flex-1 relative">
+              <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="text"
+                placeholder={`Search in ${selectedCategory === 'all' ? 'all categories' : selectedCategory}...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-4 py-1.5 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              />
+            </div>
           </div>
         </div>
 
