@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Globe, Search, ChevronDown } from 'lucide-react';
+import { 
+  Globe, 
+  Search, 
+  ChevronDown, 
+  Package, 
+  Wrench, 
+  Tag, 
+  Store, 
+  Users 
+} from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import PlacesSidebar from './components/PlacesSidebar';
 import HomePage from './pages/HomePage';
@@ -29,22 +38,27 @@ function App() {
   const navItems = {
     products: {
       title: 'Products',
+      icon: <Package size={20} />,
       items: ['Featured Products', 'New Arrivals', 'Best Sellers', 'Categories', 'Brands']
     },
     services: {
       title: 'Services',
+      icon: <Wrench size={20} />,
       items: ['Consulting', 'Training', 'Support', 'Custom Solutions', 'Maintenance']
     },
     promotions: {
       title: 'Promotional Offers',
+      icon: <Tag size={20} />,
       items: ['Current Deals', 'Seasonal Offers', 'Clearance', 'Bundle Deals', 'Special Discounts']
     },
     eshops: {
       title: 'E-Shops',
+      icon: <Store size={20} />,
       items: ['Featured Shops', 'New Shops', 'Popular Shops', 'Shop Categories', 'Shop Directory']
     },
     cooperatives: {
       title: 'Cooperatives',
+      icon: <Users size={20} />,
       items: ['Local Cooperatives', 'Artisan Groups', 'Fair Trade', 'Community Projects', 'Support Programs']
     }
   };
@@ -89,9 +103,10 @@ function App() {
         <div className="bg-white border-b border-slate-200 shadow-sm">
           <div className="container mx-auto">
             <nav className="flex justify-center">
-              {Object.entries(navItems).map(([key, { title, items }]) => (
+              {Object.entries(navItems).map(([key, { title, icon, items }]) => (
                 <div key={key} className="relative group">
-                  <button className="px-6 py-4 text-slate-700 hover:text-blue-600 flex items-center gap-1">
+                  <button className="px-6 py-4 text-slate-700 hover:text-blue-600 flex items-center gap-2">
+                    {icon}
                     {title}
                     <ChevronDown size={16} />
                   </button>
